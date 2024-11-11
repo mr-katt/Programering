@@ -9,7 +9,7 @@ Also included is a CMakeListst.txt which uses sanitizers when doing a debug buil
 
 Examples:
 
-The file leak.cc contains an example of a memory leak.
+The file leak.cc contains an example of a memory leak.b
 
 The files bounds.cc, bounds-heap.cc and sum.cc contain examples of accessing
 outside the bounds of an array (on the stack and on the heap).

@@ -34,7 +34,10 @@ clean:
 
 distclean: clean
 	rm *.d
-
+	rm *.txt
+	
+cleantext:
+	rm *.txt
 # Include the *.d files
 SRC = $(wildcard *.cc)
 -include $(SRC:.cc=.d)

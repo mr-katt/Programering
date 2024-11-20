@@ -21,18 +21,20 @@ LDFLAGS =   -g
 #LDFLAGS +=  -stdlib=libc++
 
 # Targets
-PROGS =  test_editor test_coding print_argv
+PROGS =  dictionary spell test_edit_Distance readFile
 
 all: $(PROGS)
 
-test: test_coding test_editor
-	./test_coding
-	./test_editor
+test: readFile
+	rm words.txt	
+	./readFile
 
 # Targets rely on implicit rules for compiling and linking
 print_argv: print_argv.o
 test_editor: test_editor.o editor.o
 test_coding: test_coding.o coding.o
+encode: encode.o coding.o
+decode: decode.o coding.o
 
 # Phony targets
 .PHONY: all test clean distclean
@@ -44,7 +46,7 @@ clean:
 distclean: clean
 	rm *.d
 
-
+	
 # Include the *.d files
 SRC = $(wildcard *.cc)
 -include $(SRC:.cc=.d)

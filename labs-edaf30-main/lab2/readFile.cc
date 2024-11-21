@@ -17,12 +17,18 @@ int main(){
         }
         
         int count = 0;
-        string triagrams = "";
+        vector<string> triagrams = {};
         while (line.size()-count >= 3){
-            triagrams += line.substr(count, 3)+ " ";
+            triagrams.push_back((line.substr(count, 3)));
             ++count;
         }
-        words.push_back(line + " " + to_string(count) + " "+ triagrams);
+        sort(triagrams.begin(),triagrams.end());
+        string sortedTriagrams;
+        for(string w : triagrams){
+            sortedTriagrams += w + " ";
+
+        }
+        words.push_back(line + " " + to_string(count) + " " + sortedTriagrams);
     }
     fileName.close();
     sort(words.begin(),words.end());

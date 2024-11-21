@@ -21,7 +21,7 @@ LDFLAGS =   -g
 #LDFLAGS +=  -stdlib=libc++
 
 # Targets
-PROGS =  dictionary spell test_edit_Distance readFile
+PROGS =  dictionary spell test_edit_Distance readFile word
 
 all: $(PROGS)
 
@@ -29,12 +29,14 @@ test: readFile
 	rm words.txt	
 	./readFile
 
+test2: spell
+	./spell
+
+test3: test_edit_distance
+	./test_edit_distance
 # Targets rely on implicit rules for compiling and linking
-print_argv: print_argv.o
-test_editor: test_editor.o editor.o
-test_coding: test_coding.o coding.o
-encode: encode.o coding.o
-decode: decode.o coding.o
+spell: spell.o dictionary.o word.o
+test_edit_distance: test_edit_distance.o edit_distance.o dictionary.o word.o
 
 # Phony targets
 .PHONY: all test clean distclean

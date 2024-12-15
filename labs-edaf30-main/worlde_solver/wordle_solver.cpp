@@ -1,7 +1,8 @@
 #include "wordle_solver.h"
-#include <algorithm>
 #include <iostream>
-#include <sstream>
+
+#include <string>
+using std::string;
 
 WordleSolver::WordleSolver(const std::vector<std::string>& candidates) : candidates(candidates) {}
 
@@ -35,3 +36,5 @@ bool WordleSolver::contains_any_of(const std::string& s, const std::string& cs) 
     }
     return false;
 }
+
+

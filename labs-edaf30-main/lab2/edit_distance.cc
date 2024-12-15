@@ -19,7 +19,6 @@ int Edit_distance::edit_distance(const std::string& p, const std::string& q) {
                     if( temp > distances[i][j-1] + 1) temp = distances[i][j-1] + 1;
                     distances[i][j] = temp;
                 }
-            
             }
         }
     return distances[m][n];

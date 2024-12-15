@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 #include "word.h"
-#include "dictionary.h"
+
 
 using std::vector;
 using std::string;
@@ -14,16 +14,13 @@ string Word::get_word() const {
 
 unsigned int Word::get_matches(const vector<string>& t) const {
 	unsigned int matches = 0;
-	auto it1 = this->trigrams.begin();
-	auto it2 = t.begin();
-	for(auto i  = 0; i < trigrams.size();i++){
-		for( auto i = 0; i < t.size(); i++){
-			if (it1 == it2) {
+	for(string s : this->trigrams){
+		for(string st : t){
+			if(s == st){
 				matches++;
 			}
 		}
-		it1++;
-	}		
+	}
 	return matches;
 }
 

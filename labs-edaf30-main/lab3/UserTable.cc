@@ -40,7 +40,7 @@ void UserTable::addUser(const User& u)
     for(int i=n; i > pos; --i){
         users[i] = users[i-1];
     }
-
+    n++;
     //3. stoppa in den nya användaren i luckan
     users[pos] = u;
 }
@@ -53,13 +53,12 @@ User UserTable::find(int c) const
     int high = n - 1;
     int mid = -1;
     bool found = false;
-    while (low < high && ! found) {
+    while (low <= high && ! found) {
         mid = (low + high) / 2;
-        //
         int midnbr = users[mid].getCardNbr();
-        if (midnbr = c) {
+        if (midnbr == c) {
             found = true;
-        } else if (users[mid].getCardNbr() < c) {
+        } else if (midnbr < c) {
             low = mid + 1;
         } else {
             high = mid - 1;
@@ -72,12 +71,10 @@ User UserTable::find(std::string name) const
 {
     for (int i = 0; i != n; ++i) {
         if (users[i].getName() == name) {
-            return users[i];
-        } else {
-            return user_not_found;
+               return users[i];
         }
     }
-    return user_not_found;
+        return user_not_found;
 }
 
 void UserTable::ensureCapacity(int s)
@@ -108,7 +105,7 @@ void UserTable::print(std::ostream& os) const
     * Om något kortnummer inte kunde sökas upp returneras detta. Annars, om
     * alla sökningar lyckades, returneras 0.
     */
-int testFindNbr(const UserTable ut)
+int testFindNbr(const UserTable& ut)
 {
     for (int i = 0; i < ut.n; i++) {
         int nbr = ut.users[i].getCardNbr();

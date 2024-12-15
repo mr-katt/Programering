@@ -14,7 +14,8 @@ static constexpr int maxLen{25};
 	
 private:
 void add_trigrams_suggestions(std::vector<std::string>& suggetions, const 	std::string &word) const;
-
+void rank_suggestions(std::vector<std::string>& suggetions, const std::string &word) const;
+void trim_suggestions(std::vector<std::string>& suggetions)const ;
 std::vector<Word> words[maxLen];
 };
 

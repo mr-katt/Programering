@@ -1,3 +1,2 @@
-word.o: word.cc word.h dictionary.h
+word.o: word.cc word.h
 word.h:
-dictionary.h:

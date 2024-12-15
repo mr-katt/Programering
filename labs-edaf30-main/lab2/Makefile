@@ -33,10 +33,15 @@ test2: spell
 	./spell
 
 test3: test_edit_distance
+	rm * .txt.test
 	./test_edit_distance
+
+test4: Testing_GetMatches
+	./Testing_GetMatches
 # Targets rely on implicit rules for compiling and linking
-spell: spell.o dictionary.o word.o
+spell: spell.o dictionary.o word.o edit_distance.o
 test_edit_distance: test_edit_distance.o edit_distance.o dictionary.o word.o
+Testing_GetMatches: Testing_GetMatches.o word.o
 
 # Phony targets
 .PHONY: all test clean distclean

@@ -26,7 +26,6 @@ int main(){
         string sortedTriagrams;
         for(string w : triagrams){
             sortedTriagrams += w + " ";
-
         }
         words.push_back(line + " " + to_string(count) + " " + sortedTriagrams);
     }

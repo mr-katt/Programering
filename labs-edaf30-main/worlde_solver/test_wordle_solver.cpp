@@ -61,9 +61,29 @@ void testfunctions() {
     }
 }
 
+void test_functors() {
+    // Test wrong_fn
+    WordleSolver::wrong_fn wrong("aeiou");
+    CHECK(wrong("apple"), "wrong_fn should return true for 'apple' with vowels 'aeiou'");
+    CHECK(!wrong("bcdfg"), "wrong_fn should return false for 'bcdfg' with vowels 'aeiou'");
+
+    // Test correct_fn 
+    WordleSolver::correct_fn correct({{0, "a"}, {1, "p"}});
+    CHECK(!correct("apple"), "correct_fn should return false for 'apple' with positions {0, 'a'} and {1, 'p'}");
+
+    // Test misplaced_fn
+    WordleSolver::misplaced_fn misplaced({{0, "a"}, {1, "p"}});
+    CHECK(!misplaced("apple"), "misplaced_fn should return false for 'apple' with positions {0, 'a'} and {1, 'p'}");
+
+    if (all_tests_passed) {
+        cout << "test_functors: All tests passed." << endl;
+    }
+}
+
 int main() {
     if (startup()) {
         testfunctions();
+        test_functors();
     }
 
     return 0;

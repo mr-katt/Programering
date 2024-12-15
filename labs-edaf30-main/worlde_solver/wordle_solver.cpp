@@ -1,6 +1,5 @@
 #include "wordle_solver.h"
 #include <iostream>
-
 #include <string>
 using std::string;
 
@@ -20,10 +19,7 @@ bool WordleSolver::contains_at(const std::string& s, char c, size_type pos) {
 }
 
 bool WordleSolver::contains_but_not_at(const std::string& s, char c, size_type pos) {
-    for (size_type i = 0; i < s.length(); i++) {
-        if (pos != i && contains_at(s, c, i)) return true;
-    }
-    return false;
+    return s.find(c) < s.size();
 }
 
 bool WordleSolver::contains_any_of(const std::string& s, const std::string& cs) {
@@ -34,6 +30,23 @@ bool WordleSolver::contains_any_of(const std::string& s, const std::string& cs) 
             return true;
         }
     }
+    return false;
+}
+
+// Implementation of wrong_fn functor
+bool WordleSolver::wrong_fn::operator()(const std::string& c) const {
+   
+}
+
+// Implementation of correct_fn functor (empty)
+bool WordleSolver::correct_fn::operator()(const std::string& c) const {
+    // Implementation goes here
+    return false;
+}
+
+// Implementation of misplaced_fn functor (empty)
+bool WordleSolver::misplaced_fn::operator()(const std::string& c) const {
+    // Implementation goes here
     return false;
 }
 

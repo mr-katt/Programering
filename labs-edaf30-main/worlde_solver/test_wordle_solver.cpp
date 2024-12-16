@@ -68,11 +68,13 @@ void test_functors() {
     CHECK(!wrong("bcdfg"), "wrong_fn should return false for 'bcdfg' with vowels 'aeiou'");
 
     // Test correct_fn 
-    WordleSolver::correct_fn correct({{0, "a"}, {1, "p"}});
-    CHECK(!correct("apple"), "correct_fn should return false for 'apple' with positions {0, 'a'} and {1, 'p'}");
+    WordleSolver::correct_fn correct({{0, "a"}, {2, "p"}});
+    CHECK(correct("apple"), "correct_fn should return true for 'apple' with positions {0, 'a'} and {2, 'p'}");
+    CHECK(!correct("apric"), "correct_fn should return false for 'apric' with positions {0, 'a'} and {2, 'p'}");
 
     // Test misplaced_fn
     WordleSolver::misplaced_fn misplaced({{0, "a"}, {1, "p"}});
+    CHECK(misplaced("paple"), "misplaced_fn should return true for 'paple' with positions {0, 'a'} and {1, 'p'}");
     CHECK(!misplaced("apple"), "misplaced_fn should return false for 'apple' with positions {0, 'a'} and {1, 'p'}");
 
     if (all_tests_passed) {
@@ -80,10 +82,97 @@ void test_functors() {
     }
 }
 
+void test_withCandidates() {
+    using map = std::map<size_type, std::string>; // position character should not exist
+    std::vector<std::string> test = solver.getCandidates();
+    string grey = "bcd";
+    map green;
+    map yellow;
+    auto beforeFilter = test.size();
+    
+    // Test 1: Only Grey Letters
+    solver.do_filter(test, grey, green, yellow);
+    CHECK(beforeFilter > test.size(), "Testing to see if the filter removes candidates from the list");
+    cout << "Test 1 - Only Grey Letters: beforeFilter: " << beforeFilter << " After filter: " << test.size() << endl;
+    
+    // Reset the candidates
+    test = solver.getCandidates();
+    beforeFilter = test.size();
+    
+    // Test 2: Grey and Green Letters
+    green = {{0, "a"}}; // Words starting with 'a'
+    solver.do_filter(test, grey, green, yellow);
+    CHECK(beforeFilter > test.size(), "Testing to see if the filter removes candidates from the list");
+    cout << "Test 2 - Grey and Green Letters: beforeFilter: " << beforeFilter << " After filter: " << test.size() << endl;
+    
+    // Reset the candidates
+    test = solver.getCandidates();
+    beforeFilter = test.size();
+    
+    // Test 3: Grey, Green, and Yellow Letters
+    yellow = {{4, "p"}}; // Words with 'p' at the 5th position
+    solver.do_filter(test, grey, green, yellow);
+    CHECK(beforeFilter > test.size(), "Testing to see if the filter removes candidates from the list");
+    cout << "Test 3 - Grey, Green, and Yellow Letters: beforeFilter: " << beforeFilter << " After filter: " << test.size() << endl;
+    
+    // Reset the candidates
+    test = solver.getCandidates();
+    beforeFilter = test.size();
+    
+    // Test 4: Only Green Letters
+    grey.clear();
+    green = {{0, "a"}}; // Words starting with 'a'
+    yellow.clear();
+    solver.do_filter(test, grey, green, yellow);
+    CHECK(beforeFilter > test.size(), "Testing to see if the filter removes candidates from the list");
+    cout << "Test 4 - Only Green Letters: beforeFilter: " << beforeFilter << " After filter: " << test.size() << endl;
+    
+    // Reset the candidates
+    test = solver.getCandidates();
+    beforeFilter = test.size();
+    
+    // Test 5: Only Yellow Letters
+    grey.clear();
+    green.clear();
+    yellow = {{0, "p"}}; // Words with 'p' at the 1th position
+    solver.do_filter(test, grey, green, yellow);
+    CHECK(beforeFilter > test.size(), "Testing to see if the filter removes candidates from the list");
+    cout << "Test 5 - Only Yellow Letters: beforeFilter: " << beforeFilter << " After filter: " << test.size() << endl;
+    
+    // Reset the candidates
+    test = solver.getCandidates();
+    beforeFilter = test.size();
+    
+    // Test 6: Green and Yellow Letters
+    grey.clear();
+    green = {{0, "a"}}; // Words starting with 'a'
+    yellow = {{4, "p"}}; // Words with 'p' at the 5th position
+    solver.do_filter(test, grey, green, yellow);
+    CHECK(beforeFilter > test.size(), "Testing to see if the filter removes candidates from the list");
+    cout << "Test 6 - Green and Yellow Letters: beforeFilter: " << beforeFilter << " After filter: " << test.size() << endl;
+    
+    // Reset the candidates
+    test = solver.getCandidates();
+    beforeFilter = test.size();
+    
+    // Test 7: Complex Case
+    grey = "xyz";
+    green = {{1, "a"}}; // Words with 'a' at the 2nd position
+    yellow = {{2, "p"}}; // Words with 'p' not at the 3rd position
+    solver.do_filter(test, grey, green, yellow);
+    CHECK(beforeFilter > test.size(), "Testing to see if the filter removes candidates from the list");
+    cout << "Test 7 - Complex Case: beforeFilter: " << beforeFilter << " After filter: " << test.size() << endl;
+    
+    if (all_tests_passed) {
+        cout << "test_withCandidates: All tests passed." << endl;
+    }
+}
+
 int main() {
     if (startup()) {
         testfunctions();
         test_functors();
+        test_withCandidates();
     }
 
     return 0;
